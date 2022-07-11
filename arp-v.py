@@ -9,16 +9,45 @@ import subprocess
 from subprocess import PIPE
 import os
 
+def os_type():
+    '''
+    This function works, checking what OS you are running in order to use if or ipconfig later.
+    :return: boolean - is_Windows
+    '''
+    try:
+        if os.name == "Windows":
+            is_Windows = True
+        else:
+            is_Windows = False
+    except Exception as err:
+        print("Error in tracking os type: ", err)
+    return is_Windows
 
 def whoami():
+    '''
+    Okay, this works and gets the return screen output. But why this and not others?
+    :return:
+    '''
     print("whoami: ")
-    print(subprocess.call("ifconfig"))
+    try:
+        windows_type = os_type()
+        if windows_type:
+            config = subprocess.call("ifconfig")
+        else:
+            config = subprocess.call("ipconfig")
+    except Exception as err:
+        print("There is a problem still: ", err)
+    print("Config: ", config)
     return
 
 
 def ping2():
+    '''
+    This failed due to priv requirement for -c switch, so its removed.
+    :return: str, however the process doesn't wait for the execution to complete.
+    '''
     print("Ping2 - os.system: ")
-    os.system("ping -c 2 192.168.0.1 > tmp")
+    os.system("ping 192.168.0.1 > tmp")
     print(open('tmp', 'r').read())
     os.remove('tmp')
     return
