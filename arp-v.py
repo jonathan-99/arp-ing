@@ -43,11 +43,18 @@ def run_command(cmd):
 def nmap_return(address):
     print("This has been passed for nmap: ", address)
     switches = "-Pn " + str(address)
-    s = subprocess.call(switches, stdout=PIPE, shell=True, timeout=None)  # stdin=None, stdout=None, stderr=None,
+    s = subprocess.call(switches, stdout=PIPE, shell=True, timeout=None) # stdin=None, stdout=None, stderr=None,
     for line in s.stdout:
         print("finally: ", line)
     output = subprocess.run('nmap -Pn 192.168.0.1', capture_output=True, text=True)
-    print("Found: ", output.stdout.str(readline))
+    print("Found: ", output.stdout.readline)
+    return
+
+def another():
+    new_command = "{}{}".format("ping -c 2 192.168.0.1", self.tld)
+    self.logDebug("Trying intitial who is with command " + new_command)
+    self.process = subprocess.Popen(newCommand.split(), stdout=subprocess.PIPE)
+    self.rawResponse, self.error = self.process.communicate()
     return
 
 
@@ -71,7 +78,7 @@ def main_function():
         print("A :", a)
         nmap_return(a)
         ping(a)
-    print("Finished.")
+    print("Here in main.")
     return
 
 # Changed: evaluate the content of variable __name__, instead of the string "__name__"
