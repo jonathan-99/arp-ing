@@ -1,23 +1,80 @@
+#!/usr/bin/env python3
+# pylint: disable=I0011
+# pylint: disable=C0103
+# pylint: disable=C0325
+# pylint: disable=C0413
+"""Documentation goes here ;)"""
+
 import subprocess
+from subprocess import PIPE
+import os
+
+
+def whoami():
+    print("whoami: ")
+    print(subprocess.call("ifconfig"))
+    return
+
+
+def ping2():
+    print("Ping2 - os.system: ")
+    os.system("ping -c 2 192.168.0.1 > tmp")
+    print(open('tmp', 'r').read())
+    os.remove('tmp')
+    return
+
+
+def ping(address):
+    print("subprocess.call simple: ")
+    subprocess.call("ping", "-c 4 " + address)
+    print("something ")
+    return
+
+
+def run_command(cmd):
+    """given shell command, returns communication tuple of stdout and stderr"""
+    print("Popen command: ")
+    return subprocess.Popen(cmd,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            stdin=subprocess.PIPE).communicate()
+
 
 def nmap_return(address):
-    print("This has been passed: ", address)
+    print("This has been passed for nmap: ", address)
     switches = "-Pn " + str(address)
-#    subprocess.call(switches, stdin=None, stout=None, sterr=None, shell=False, timeout=None)
-    output = subprocess.getoutput('nmap -Pn 192.168.0.1')
-    print("Found: ",output)
+    s = subprocess.call(switches, stdout=PIPE, shell=True, timeout=None)  # stdin=None, stdout=None, stderr=None,
+    for line in s.stdout:
+        print("finally: ", line)
+    output = subprocess.run('nmap -Pn 192.168.0.1', capture_output=True, text=True)
+    print("Found: ", output.stdout.str(readline))
     return
+
+
+def another():
+    print("process.communicate: ")
+    new_command = "{}{}".format("ping -c 2 192.168.0.1", self.tld)
+    self.logDebug("Trying initial who is with command " + new_command)
+    self.process = subprocess.Popen(newCommand.split(), stdout=subprocess.PIPE)
+    self.rawResponse, self.error = self.process.communicate()
+    return
+
 
 def main_function():
     print("Staring with")
-    addresses = ["192.168.0.1/24","192.168.1.0/24"]
+    whoami()
+    ping2()
+    another()
+    run_command("ping -c 2 192.168.0.1")
+    addresses = ["192.168.0.1/24", "192.168.1.0/24"]
     for a in addresses:
         print("A :", a)
         nmap_return(a)
-    print("Here in main.")
+        ping(a)
+    print("Finished.")
     return
 
-
-if "__name__" == "__main__":
+# Changed: evaluate the content of variable __name__, instead of the string "__name__"
+if __name__ == "__main__":
     print("Finding stuff...")
     main_function()
