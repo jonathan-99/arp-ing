@@ -43,11 +43,18 @@ def nmap_return(address):
     print("Found: ", output.stdout.readline)
     return
 
+def another():
+    new_command = "{}{}".format("ping -c 2 192.168.0.1", self.tld)
+    self.logDebug("Trying intitial who is with command " + new_command)
+    self.process = subprocess.Popen(newCommand.split(), stdout=subprocess.PIPE)
+    self.rawResponse, self.error = self.process.communicate()
+    return
 
 def main_function():
     print("Staring with")
     whoami()
     ping2()
+    another()
     run_command("ping -c 2 192.168.0.1")
     addresses = ["192.168.0.1/24", "192.168.1.0/24"]
     for a in addresses:
