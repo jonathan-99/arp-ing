@@ -11,30 +11,37 @@ import os
 
 
 def whoami():
+    print("whoami: ")
     print(subprocess.call("ifconfig"))
     return
 
+
 def ping2():
-    print("here")
+    print("Ping2 - os.system: ")
     os.system("ping -c 2 192.168.0.1 > tmp")
     print(open('tmp', 'r').read())
     os.remove('tmp')
     return
 
+
 def ping(address):
+    print("subprocess.call simple: ")
     subprocess.call("ping", "-c 4 " + address)
-    print("soemthing ")
+    print("something ")
     return
+
 
 def run_command(cmd):
     """given shell command, returns communication tuple of stdout and stderr"""
+    print("Popen command: ")
     return subprocess.Popen(cmd,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             stdin=subprocess.PIPE).communicate()
 
+
 def nmap_return(address):
-    print("This has been passed: ", address)
+    print("This has been passed for nmap: ", address)
     switches = "-Pn " + str(address)
     s = subprocess.call(switches, stdout=PIPE, shell=True, timeout=None) # stdin=None, stdout=None, stderr=None,
     for line in s.stdout:
@@ -49,6 +56,16 @@ def another():
     self.process = subprocess.Popen(newCommand.split(), stdout=subprocess.PIPE)
     self.rawResponse, self.error = self.process.communicate()
     return
+
+
+def another():
+    print("process.communicate: ")
+    new_command = "{}{}".format("ping -c 2 192.168.0.1", self.tld)
+    self.logDebug("Trying initial who is with command " + new_command)
+    self.process = subprocess.Popen(newCommand.split(), stdout=subprocess.PIPE)
+    self.rawResponse, self.error = self.process.communicate()
+    return
+
 
 def main_function():
     print("Staring with")
