@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# pylint: disable=I0011
+# pylint: disable=C0103
+# pylint: disable=C0325
+# pylint: disable=C0413
+"""Documentation goes here ;)"""
+
 import subprocess
 from subprocess import PIPE
 import os
@@ -50,7 +57,7 @@ def main_function():
     print("Here in main.")
     return
 
-
-if "__name__" == "__main__":
+# Changed: evaluate the content of variable __name__, instead of the string "__name__"
+if __name__ == "__main__":
     print("Finding stuff...")
     main_function()
