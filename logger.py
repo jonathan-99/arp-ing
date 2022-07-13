@@ -14,7 +14,7 @@ from logging.handlers import RotatingFileHandler
 class Logger:
 	"""Plain logging - encapsulated on the basis that future implementations will adjust logging requirements"""
 	c_loggingConfFile = "logging.conf"
-	c_loggingOutput = "arp.log"
+	c_loggingOutput = "arp"
 	# change the logging format here, using this for the elements: https://docs.python.org/3/library/logging.html#logrecord-attributes
 	c_loggingFormat = "%(asctime)s: [%(levelname)s] %(name)s [%(lineno)s] %(funcName)s) %(message)s"
 
@@ -39,7 +39,7 @@ class Logger:
 				self.pipe.addHandler(direct)
 
 			rotated = logging.handlers.RotatingFileHandler(
-				"{!s}/{!s}.log".format(".", self.__class__.__name__),
+				"{!s}/{!s}.log".format(".", self.c_loggingOutput or self.__class__.__name__),
 				maxBytes=1024<<8,
 				backupCount=4
 			)
