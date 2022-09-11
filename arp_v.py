@@ -29,7 +29,9 @@ cmd_netconfig = "/sbin/ifconfig"
 os_isWin = False
 
 # perms check - needed for nmap
-if os.getuid() != 0:
+import platform
+operating_system = platform.system()
+if operating_system != "Linux":
     pipe.log("Cannot acquire rights to run nmap, quitting")  # , logLevel=logging.ERROR)
     exit(1)
 
