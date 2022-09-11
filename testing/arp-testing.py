@@ -1,5 +1,5 @@
 import unittest
-import 'arp-v' as tool
+import arp_v as tool
 
 
 class MyTestCase(unittest.TestCase):
