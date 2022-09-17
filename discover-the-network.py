@@ -23,16 +23,20 @@ def main_function() -> int:
 
     args = parser.parse_args()
 
-    if args.ping != "":
-        output = arp_v.run_command("ping -c 2")
-        if output != "":
-            print("Done that command {}".format(output))
-            return 0
-    else:
+    if args.ping:
+        if arp_v.check_os() == True:
+            output = arp_v.run_command("ping -c 2")
+            if output != "":
+                print("Done that command {}".format(output))
+                return 0
+        else:
+            print("This needs linux to function")
+    elif args.ping != "":
         input = str("nmap -Pn " + args.ipaddr + args.mask)
         output = arp_v.run_command(input)
         print("This bit did: ", output)
-
+    else:
+        pass
     return 0
 
 if __name__ == "__main__":
