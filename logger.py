@@ -5,35 +5,35 @@
 # pylint: disable=C0413
 """Encapsulated logging"""
 
-from distutils.debug import DEBUG
 import logging
-import os
 import sys
 from logging.handlers import RotatingFileHandler
+
 
 class Logger:
 	"""Plain logging - encapsulated on the basis that future implementations will adjust logging requirements"""
 	c_loggingConfFile = "logging.conf"
 	c_loggingOutput = "arp"
-	# change the logging format here, using this for the elements: https://docs.python.org/3/library/logging.html#logrecord-attributes
+	# change the logging format here, using this for the elements:
+	# https://docs.python.org/3/library/logging.html#logrecord-attributes
 	c_loggingFormat = "%(asctime)s: [%(levelname)s] %(name)s [%(lineno)s] %(funcName)s) %(message)s"
 
-	def __init__(self, logLevel = logging.DEBUG, enableStdOut = False):
+	def __init__(self, logLevel = logging.debug, enableStdOut = False):
 		"""Ctor"""
 		logging.root.handlers = []
 
-		## NOTE: simple version for reference
+		# NOTE: simple version for reference
 		# logging.basicConfig(
 		# 	filename=self.c_loggingOutput, 
 		# 	format=self.c_loggingFormat, 
 		# 	encoding="utf-8", level=logLevel
 		# )
 
-		self.pipe = logging.getLogger("ARP-V %s" % (self.__class__.__name__))
+		self.pipe = logging.getLogger("ARP-V %s" % self.__class__.__name__)
 
 		# Python doesn't really do threading, so just make sure handlers are not always used across instances
-		if (len(self.pipe.handlers) == 0):
-			if (enableStdOut):
+		if len(self.pipe.handlers) == 0:
+			if enableStdOut:
 				direct = logging.StreamHandler(sys.stdout)
 				direct.setFormatter(logging.Formatter(self.c_loggingFormat))
 				self.pipe.addHandler(direct)
@@ -51,7 +51,7 @@ class Logger:
 		"""Dtor to counter GC issues in specific circumstances"""
 		# NOTE: not implemented in this version
 
-	def log(self, message: str, logLevel = logging.DEBUG):
+	def log(self, message: str, logLevel = logging.debug()):
 		"""Logs a plain message with default log level DEBUG"""
 		
 		## NOTE: match keyword requires python 3.10
@@ -65,11 +65,9 @@ class Logger:
 		# 	case _:
 		# 		self.pipe.debug(message)
 
-		if (logLevel == logging.ERROR):
+		if logLevel == logging.ERROR:
 			self.pipe.error(message)
-		elif (logLevel == logging.WARN):
-			self.pipe.warn(message)
-		elif (logLevel == logging.INFO):
+		elif logLevel == logging.INFO:
 			self.pipe.info(message)
 		else:
 			self.pipe.debug(message)
